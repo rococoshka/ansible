@@ -1,0 +1,2 @@
+[test_server]
+3.133.97.254  yourdomain=kkkwp.ml

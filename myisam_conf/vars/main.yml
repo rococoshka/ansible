@@ -1,0 +1,3 @@
+---
+# vars file for myisam_conf
+myisamconfdest: /etc/mysql/conf.d/myisam.cnf

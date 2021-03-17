@@ -1,0 +1,11 @@
+---
+# tasks file for nginx
+- name: Generate selfsigned certey
+  script: nginx_default/script/certkeygen.sh
+
+- name: Set default NGINX configuration
+  template:
+    src: default
+    dest: /etc/nginx/sites-enabled/default
+  notify: Restart nginx
+

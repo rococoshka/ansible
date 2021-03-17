@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dehydrated -c -g

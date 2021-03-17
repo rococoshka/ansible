@@ -1,0 +1,38 @@
+---
+# tasks file for nginx_site
+
+- name: Account dehydrated
+  shell: dehydrated --register --accept-terms
+
+- name: Add domain dehydrated
+  shell: echo "{{yourdomain}} www.{{yourdomain}}" >> /etc/dehydrated/domains.txt
+
+- name: Configure http for site
+  template:
+    src: domain80.conf
+    dest: /etc/nginx/sites-enabled/{{yourdomain}}80.conf
+  notify: Restart nginx
+
+- name: Call notifyes
+  meta: flush_handlers
+
+- name: Take keys for site
+  shell: dehydrated -c
+
+- name: Configure https for site
+  template:
+    src: domain443.conf
+    dest: /etc/nginx/sites-enabled/{{yourdomain}}443.conf
+  notify: Restart nginx
+
+- name: Auto update dehydrated step 1
+  template:
+    src: Dehydrated
+    dest: /etc/cron.weekly/Dehydrated
+    mode: 0755
+
+- name: Auto update dehydrated step 2
+  template:
+    src: hook.sh
+    dest: /etc/dehydrated/hook.sh
+    mode: 0755

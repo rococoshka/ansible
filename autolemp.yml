@@ -1,0 +1,13 @@
+---
+- name: Install and configure LEMP and WordPress
+  hosts: test_server
+  become: yes
+  
+  roles:
+    - install_packages
+    - myisam_conf
+    - nginx_default
+    - nginx_site
+
+  handlers:
+    - include: handlers/main.yml

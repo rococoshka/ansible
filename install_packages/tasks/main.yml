@@ -1,0 +1,23 @@
+---
+# tasks file for install_packages
+- name: Update apt packages
+  apt:
+    update_cache: yes
+
+- name: Install Packages
+  apt:
+    name:
+      - mariadb-server
+      - php{{php_version}}-fpm
+      - php{{php_version}}-mysql
+      - php{{php_version}}-curl
+      - php{{php_version}}-intl
+      - php{{php_version}}-mbstring
+      - php{{php_version}}-soap
+      - php{{php_version}}-xml
+      - php{{php_version}}-xmlrpc
+      - php{{php_version}}-zip
+      - nginx-light
+      - dehydrated
+    state: latest
+    install_recommends: no

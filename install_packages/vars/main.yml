@@ -1,0 +1,3 @@
+---
+# vars file for install_packages
+php_version: 7.2
