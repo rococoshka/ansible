@@ -5,7 +5,10 @@
   shell: dehydrated --register --accept-terms
 
 - name: Add domain dehydrated
-  shell: echo "{{yourdomain}} www.{{yourdomain}}" >> /etc/dehydrated/domains.txt
+  lineinfile:
+    dest: /etc/dehydrated/domains.txt
+    line: "{{yourdomain}} www.{{yourdomain}}"
+    create: yes
 
 - name: Configure http for site
   template:
@@ -16,8 +19,18 @@
 - name: Call notifyes
   meta: flush_handlers
 
-- name: Take keys for site
-  shell: dehydrated -c
+#- name: Take keys for site
+#  shell: dehydrated -c
+
+- name: Make dir for local site
+  shell: /var/lib/dehydrated/certs/{{yourdomain}}
+  args:
+    creates: "/var/lib/dehydrated/certs/{{yourdomain}}"
+
+- name: Take keys for localsite
+  shell: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /var/lib/dehydrated/certs/{{yourdomain}}/privkey.pem -out /var/lib/dehydrated/certs/{{yourdomain}}/fullchain.pem && exit
+  args:
+    creates: "var/lib/dehydrated/certs/{{yourdomain}}/privkey.pem"
 
 - name: Configure https for site
   template:

@@ -7,7 +7,12 @@
 - name: Restart nginx
   service:
     name: nginx
-    state: restarted
+    state: reloaded
+
+- name: Enable nginx
+  service:
+    name: nginx
+    enabled: yes
 
 - name: Start mariadb
   service:
@@ -18,3 +23,8 @@
   service:
     name: mysql
     state: restarted
+
+- name: Enable mariadb
+  service:
+    name: mysql
+    enabled: yes

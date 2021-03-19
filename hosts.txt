@@ -1,2 +1,3 @@
 [test_server]
-3.133.97.254  yourdomain=kkkwp.ml
+192.168.0.108  yourdomain=test1.pls
+192.168.0.109 yourdomain=test2.pls

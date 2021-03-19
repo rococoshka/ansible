@@ -2,6 +2,8 @@
 # tasks file for nginx
 - name: Generate selfsigned certey
   script: nginx_default/script/certkeygen.sh
+  args:
+    creates: /etc/nginx/default.crt
 
 - name: Set default NGINX configuration
   template:

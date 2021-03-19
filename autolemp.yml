@@ -8,6 +8,6 @@
     - myisam_conf
     - nginx_default
     - nginx_site
-
+    - install_wp
   handlers:
     - include: handlers/main.yml

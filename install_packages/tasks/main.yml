@@ -3,6 +3,7 @@
 - name: Update apt packages
   apt:
     update_cache: yes
+    cache_valid_time: 3600
 
 - name: Install Packages
   apt:
@@ -21,3 +22,5 @@
       - dehydrated
     state: latest
     install_recommends: no
+  notify: Enable nginx
+  notify: Enable mariadb  
