@@ -20,6 +20,8 @@
       - php{{php_version}}-zip
       - nginx-light
       - dehydrated
+      - python-pexpect
+      - python-mysqldb
     state: latest
     install_recommends: no
   notify: Enable nginx

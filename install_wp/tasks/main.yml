@@ -5,5 +5,39 @@
   args:
     creates: /usr/local/bin/wp
 
-- name: Install and configure WordPress
-  script: install_wp/scripts/wp_install.sh
+- name: Make dir fo Wordpress
+  file:
+    path: /var/www/wordpress
+    state: directory
+    owner: user
+    group: user
+    mode: '0755'
+
+- name: Install wordpress
+  command: sudo -u user -i -- wp core download --path=/var/www/wordpress
+  args:
+    chdir: /var/www/wordpress
+    creates: /var/www/wordpress/wp-content
+
+- name: Create DB user
+  mysql_user:
+    name: wp
+    host: localhost
+    password: wordpress
+    priv: '*.*:ALL'
+
+- name: Configure wordpress
+  command: sudo -u user -i -- wp config create --path=/var/www/wordpress --dbname=wordpress --dbuser=wp --dbpass=wordpress --dbhost=localhost --locale=ro_RO
+  args:
+    chdir: /var/www/wordpress
+    creates: /var/www/wordpress/wp-config.php
+
+#- name: Check if DB exist
+#  shell: mysql -e 'SHOW DATABASES;' | grep wordpress
+#  register: dbstatus
+#  failed_when: dbstatus.rc == 2
+
+- name: CreaTE DB wordpress
+  command: sudo -u user -i -- wp db create --path=/var/www/wordpress
+  args:
+    creates: /var/lib/mysql/wordpress
